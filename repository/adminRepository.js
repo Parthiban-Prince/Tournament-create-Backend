@@ -1,4 +1,6 @@
 import adminSchema from '../schema/adminSchema.js';
+import userSchema from '../schema/userSchema.js';
+import tournamentSchema from "../schema/tournamentSchema.js";
 
 export async function adminRepository(email,password){
 
@@ -16,4 +18,80 @@ export async function adminRepository(email,password){
 
 }
 
-export default {adminRepository};
+
+export async function adminDataRepoitory(){
+
+    try{
+
+        const tournamentResult = await tournamentSchema.estimatedDocumentCount()
+
+        const registerResult = "need to create a registerteam"
+
+        const totalTeam  ="need to create Team"
+
+
+
+        const userResult = await userSchema.estimatedDocumentCount()
+        return {
+            tournamentResult,
+            userResult
+        }
+
+    }
+    catch(error){
+        throw error
+    }
+
+}
+
+
+export async function userAdminDataRepository() {
+    
+    try{
+        const result = await userSchema.find().select('-password');
+        return result
+    }
+    catch(error){
+        throw error
+    }
+
+}
+
+export async function tournamentAdminDataRepository(){
+       try{
+        const result = await tournamentSchema.find()
+        return result
+    }
+    catch(error){
+        throw error
+    }
+
+}
+
+export async function teamAdminDataRepository(){
+       try{
+        const result = await tournamentSchema.find()
+        return result
+    }
+    catch(error){
+        throw error
+    }
+
+}
+
+export async function registerAdminDataRepository(){
+       try{
+        const result = await tournamentSchema.find()
+        return result
+    }
+    catch(error){
+        throw error
+    }
+
+}
+
+
+
+
+
+export default {adminRepository,adminDataRepoitory,userAdminDataRepository,tournamentAdminDataRepository,teamAdminDataRepository,registerAdminDataRepository  } ;

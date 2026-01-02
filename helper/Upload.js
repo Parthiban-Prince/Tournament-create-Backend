@@ -4,8 +4,9 @@ export default async function uploadUserPost(req, res, next) {
   try {
     const file = req.file;
 
+    // If no file, just skip upload and continue
     if (!file) {
-      return res.status(400).json({ message: "No file uploaded" });
+      return next();
     }
 
     const result = await new Promise((resolve, reject) => {
@@ -16,21 +17,20 @@ export default async function uploadUserPost(req, res, next) {
         },
         (error, result) => {
           if (error) reject(error);
-          resolve(result);
+          else resolve(result);
         }
       ).end(file.buffer);
     });
 
-    // ✅ attach result to req for next middleware
+    // Attach uploaded image info to req
     req.uploadedImage = {
       url: result.secure_url,
       public_id: result.public_id,
     };
 
-    // 👉 pass control
     next();
-
   } catch (error) {
     return res.status(500).json({ message: "Upload failed" });
   }
 }
+

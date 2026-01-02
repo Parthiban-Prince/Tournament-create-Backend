@@ -1,4 +1,4 @@
-import { createUserRepository,getUserRepository,profileUpdateRepository,photoUploadRepository } from '../repository/userRepository.js';
+import { createUserRepository,getUserRepository,profileUpdateRepository,photoUploadRepository,passwordRepository } from '../repository/userRepository.js';
 import bcrypt from 'bcrypt';
 import {generateToken} from '../helper/jwtToken.js' 
 export async function createUserService(Data) {
@@ -94,9 +94,8 @@ export async function photoUpdateservice(data) {
 
   try {
 
-    console.log("service data 👉", data);
 
-    const user = await photoUpdateRepository(data);
+    const user = await photoUploadRepository(data);
 
     return user;
 
@@ -107,11 +106,42 @@ export async function photoUpdateservice(data) {
 }
 
 
+export async function passwordResetService(data){
+
+  try{
+
+    const result = await passwordRepository(data)
+    return result
+
+  }
+  catch(error){
+    throw error
+  }
+
+}
+
+
+export async function userDashboardService(data) {
+
+  try{
+
+    const user = await userDashboardRepository(data)
+    return user
+
+  }
+  catch(error){
+    throw error
+  }
+  
+}
+
 
 export default {
     createUserService,
     updateUserService,
     getUserService,
-    photoUpdateservice
+    photoUpdateservice,
+    passwordResetService,
+    userDashboardService
   
   };

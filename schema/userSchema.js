@@ -4,21 +4,23 @@ import bcrypt from 'bcrypt'
 const user = new mongoose.Schema({
     name: {type: String, required: true ,},
     email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
+    password: {type: String, required: true,  },
     age: {type: Number, required: true},
     role:{type:String, default:"user"},
-    photo:{type:String, default:"https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"},
+    photo:{type:String, default:null},
 
 });
 
-user.pre("save", function EncryptPassword() {
-    const user = this;
+user.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        return next();
+    }
 
-    const SaltRounds = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(user.password, SaltRounds);
-    user.password = hashedPassword;
-
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
+
 
 export const userSchema = mongoose.model("User", user);
 

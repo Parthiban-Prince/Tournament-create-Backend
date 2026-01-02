@@ -2,10 +2,6 @@ import {createTournamentService,deleteTournamentService}from '../service/tournam
 
 export async function createTournamentController(req, res) {
   try {
-    // ✅ clean logs only
-    console.log("body 👉", req.body);
-    console.log("file 👉", req.file);
-    console.log("uploadedImage 👉", req.uploadedImage);
 
     // ✅ normalize body
     const body = { ...req.body };

@@ -1,9 +1,8 @@
 import express from 'express';
+import  {passwordReset} from '../controller/userController.js'
 
 const router = express.Router();
 
-router.get('/rest' , (req,res) => {
-    res.send("Password Reset Endpoint");
-});
+router.post('/rest' ,passwordReset)
 
 export default router;

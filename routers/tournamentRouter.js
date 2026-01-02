@@ -16,4 +16,7 @@ router.delete('/delete' ,deleteTournamentController, (req,res) =>{
 })
 
 
+
+
+
 export default router;

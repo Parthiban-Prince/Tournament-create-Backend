@@ -5,6 +5,7 @@ import galleryRouter from './galleryRouter.js';
 import passwordRouter from './passwordRouter.js';
 import tournamentRouter from './tournamentRouter.js';
 import teamRouter from './teamRouter.js';
+import regTeamRouter from './regTeamRouter.js'
 
 const router = express.Router();
 
@@ -19,6 +20,8 @@ router.use('/password', passwordRouter);
 router.use('/tournament', tournamentRouter);
 
 router.use('/team', teamRouter);
+
+router.use('/register',regTeamRouter)
 
 
 export default router;

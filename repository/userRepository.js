@@ -70,25 +70,50 @@ export async function photoUploadRepository(data) {
 
    try{
 
-    console.log(data);
-
+    const {url,email}=data
         const user = await userSchema.findOneAndUpdate(
           {email: email},
           {
             $set: {
-              photo
+              photo:url
             }
           },{
             new: true
           }
         );
+     
         return user;
           }
     catch(error){
+      console.log(error.message)
         throw new Error("Database Error");
     }
 
 
+}
+
+export async function passwordRepository(data) {
+
+
+  try{
+
+    console.log(data)
+
+    const user  = await userSchema.findOneAndUpdate(
+      {email:data.email},
+      {
+        $set:{password:data.password}
+      },{new:true}
+
+    );
+
+    return user
+  }
+  catch(error){
+    console.log(error.message)
+    throw new Error("Database Error")
+  }
+  
 }
 
 
@@ -98,6 +123,7 @@ export default {
     createUserRepository,
     getUserRepository,
     profileUpdateRepository,
-    photoUploadRepository
+    photoUploadRepository,
+    passwordRepository
 };
 

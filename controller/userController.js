@@ -1,4 +1,6 @@
-import {createUserService, getUserService ,updateUserService,photoUpdateservice } from "../service/userService.js";
+import {createUserService, getUserService ,updateUserService,photoUpdateservice,passwordResetService } from "../service/userService.js";
+import bcrypt from 'bcrypt'
+
 
 
 export async function createUser(req, res) {
@@ -62,25 +64,43 @@ export async function getUser(req, res) {
 }
 
 
+
+
 export async function passwordReset(req, res) {
+  try {
+    const { email, newPassword, confirmPassword } = req.body;
 
-      try{
-          const {email} = req.body;
+    if (!email || !newPassword || !confirmPassword) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
 
-          if(!email){
-              return res.status(400).json({message: "Missing required fields"});
-          }
+    if (newPassword !== confirmPassword) {
+      return res
+        .status(400)
+        .json({ message: "Password does not match confirm password" });
+    }
 
-          const user = await passwordRestService({email});
+    // Hash the new password using bcrypt with salt rounds = 10
+    const saltRounds = bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-          if(!user.email){
-              return res.status(404).json({message: "User not found"});
-          }
-      }
-      catch(error){         return res.status(500).json({message: "Internal Server Error"});
+    // Call service with email and hashed password
+    const user = await passwordResetService({ email, password: hashedPassword });
+
+    if (!user || !user.email) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      message: "Password reset successful",
+    });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 
-}}
 
 
 export async function userProfile(req, res) {
@@ -117,13 +137,19 @@ export async function userProfile(req, res) {
 
 export async function photoUpload(req, res) {
   try {
-    console.log("req.file 👉", req.file);
 
-    if (!req.file) {
+
+
+
+    if (!req.uploadedImage.url) {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const result = await photoUpdateservice(req.file);
+    const result = await photoUpdateservice({
+  url: req.uploadedImage.url,
+  email: req.user.email
+});
+
 
     return res.status(200).json({
       message: "Photo uploaded successfully",
@@ -154,4 +180,23 @@ export async function createTeamController(req,res){
 
 
 
-export default {createUser,getUser};
+export async function userDashboard(req,res) {
+
+  try{
+
+    const email = req.user.email
+
+    const userData = await userDashboardService(email)
+    return res.status(200).json({message:"User Data Get successfully",userData})
+
+  }catch(error)
+  {
+    return res.status(500).json({message:"Server Error"})
+  }
+  
+}
+
+
+
+
+export default {createUser,getUser,passwordReset};
