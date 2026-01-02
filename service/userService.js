@@ -1,4 +1,4 @@
-import { createUserRepository,getUserRepository,profileUpdateRepository,photoUploadRepository,passwordRepository } from '../repository/userRepository.js';
+import { createUserRepository,getUserRepository,profileUpdateRepository,photoUploadRepository,passwordRepository,userDashboardRepository } from '../repository/userRepository.js';
 import bcrypt from 'bcrypt';
 import {generateToken} from '../helper/jwtToken.js' 
 export async function createUserService(Data) {
@@ -27,6 +27,7 @@ export async function getUserService(data) {
 
     // 2️⃣ get user from DB
     const user = await getUserRepository(email);
+    console.log(user)
 
     if (!user || !user.email) {
       return null; // user not found
@@ -44,6 +45,7 @@ export async function getUserService(data) {
       {
         userId: user._id,
         email: user.email,
+        name:user.name
       }
 
         const storingToken = generateToken(tokenPayload)

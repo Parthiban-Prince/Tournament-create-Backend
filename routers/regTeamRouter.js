@@ -1,8 +1,18 @@
-import express from 'express'
-import {registerController} from '../controller/registerController.js'
+import express from "express";
+import { tournamentRegisterController } from "../controller/registerController.js";
+import Upload from '../helper/multer.js'
+import uploadPaymentScreenshot from '../helper/Upload.js'
+import authMiddleware from '../helper/authenication.js'
 
-const router =express.Router()
 
-router.post('/team',registerController )
+const router = express.Router();
 
-export default router
+router.post(
+  "/tournament/register",
+  authMiddleware,
+  Upload.single("paymentScreenshot"),
+  uploadPaymentScreenshot,
+  tournamentRegisterController
+);
+
+export default router;

@@ -1,6 +1,8 @@
 import adminSchema from '../schema/adminSchema.js';
 import userSchema from '../schema/userSchema.js';
 import tournamentSchema from "../schema/tournamentSchema.js";
+import TeamSchema from '../schema/TeamSchema.js';
+import teamRegister from '../schema/regTeamSchema.js'
 
 export async function adminRepository(email,password){
 
@@ -25,16 +27,18 @@ export async function adminDataRepoitory(){
 
         const tournamentResult = await tournamentSchema.estimatedDocumentCount()
 
-        const registerResult = "need to create a registerteam"
+        const registerResult = await teamRegister.estimatedDocumentCount()
 
-        const totalTeam  ="need to create Team"
+        const totalTeam  = await TeamSchema.estimatedDocumentCount()
 
 
 
         const userResult = await userSchema.estimatedDocumentCount()
         return {
             tournamentResult,
-            userResult
+            userResult,
+            totalTeam,
+            registerResult
         }
 
     }
@@ -60,6 +64,7 @@ export async function userAdminDataRepository() {
 export async function tournamentAdminDataRepository(){
        try{
         const result = await tournamentSchema.find()
+        
         return result
     }
     catch(error){
@@ -70,7 +75,7 @@ export async function tournamentAdminDataRepository(){
 
 export async function teamAdminDataRepository(){
        try{
-        const result = await tournamentSchema.find()
+        const result = await TeamSchema.find()
         return result
     }
     catch(error){
@@ -81,7 +86,7 @@ export async function teamAdminDataRepository(){
 
 export async function registerAdminDataRepository(){
        try{
-        const result = await tournamentSchema.find()
+        const result = await teamRegister.find()
         return result
     }
     catch(error){

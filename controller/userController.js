@@ -1,4 +1,4 @@
-import {createUserService, getUserService ,updateUserService,photoUpdateservice,passwordResetService } from "../service/userService.js";
+import {createUserService, getUserService ,updateUserService,photoUpdateservice,passwordResetService,userDashboardService } from "../service/userService.js";
 import bcrypt from 'bcrypt'
 
 
@@ -184,6 +184,8 @@ export async function userDashboard(req,res) {
 
   try{
 
+ 
+
     const email = req.user.email
 
     const userData = await userDashboardService(email)
@@ -191,6 +193,7 @@ export async function userDashboard(req,res) {
 
   }catch(error)
   {
+    console.log(error.message)
     return res.status(500).json({message:"Server Error"})
   }
   
@@ -199,4 +202,4 @@ export async function userDashboard(req,res) {
 
 
 
-export default {createUser,getUser,passwordReset};
+export default {createUser,getUser,passwordReset,userDashboard};

@@ -1,16 +1,37 @@
+import { tournamentRegisterService } from "../service/registerService.js";
 
+export async function tournamentRegisterController(req, res) {
+  try {
 
-export async function registerController(req,res) {
+    console.log(req)
 
-    try{
+    const userId = req.user.userId;
+    const { tournamentName, teamName } = req.body;
+    const paymentScreenshot = req.uploadedImage.url;
 
-        
-        const result = await registerService()
-        return res.status(200).json({result,message:"registered"})
-
+    if (!tournamentName || !teamName) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-    catch(error){
-        return res.status(500).json({message:"Server Error"})
+
+    const result = await tournamentRegisterService(
+      userId,
+      tournamentName,
+      teamName,
+      paymentScreenshot
+    );
+
+    if (result.alreadyRegistered) {
+      return res.status(409).json({
+        message: "Team already registered for this tournament"
+      });
     }
-    
+
+    return res.status(201).json({
+      message: "Tournament registered successfully",
+      registration: result.registration
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
 }

@@ -1,20 +1,27 @@
+import {
+  createTournamentRegistration,
+  findTeamRegistration
+} from "../repository/registerRepository.js";
 
+export async function tournamentRegisterService(
+  userId,
+  tournamentName,
+  teamName,
+  paymentScreenshot
+) {
+  // prevent duplicate team registration
+  const existing = await findTeamRegistration(tournamentName, teamName);
 
+  if (existing) {
+    return { alreadyRegistered: true };
+  }
 
-export async function registerService(data) {
+  const registration = await createTournamentRegistration({
+    user: userId,
+    tournamentName,
+    teamName,
+    paymentScreenshot
+  });
 
-
-    try{
-
-        if(team==availableTeam){
-            return res.status(200).json({message:"Team not available"})
-        }
-        const register = await registerRepository(data)
-        return register
-
-    }
-    catch(error){
-        throw error
-    }
-    
+  return { alreadyRegistered: false, registration };
 }

@@ -1,4 +1,5 @@
 import userSchema from "../schema/userSchema.js";
+import teamSchema from '../schema/TeamSchema.js'
 
 export async function createUserRepository(userData) {
   try {
@@ -117,6 +118,36 @@ export async function passwordRepository(data) {
 }
 
 
+export async function userDashboardRepository(email) {
+  try {
+    const user = await userSchema
+      .findOne({ email })
+      .select("-password");
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const teamInformation = await teamSchema
+      .findOne({
+        $or: [
+          { captain: user._id },
+          { members: user._id }
+        ]
+      })
+      .populate("captain", "name email")
+      .populate("members", "name email");
+
+    return {
+      user,
+      teamInformation,
+    };
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 
 
 export default {
@@ -124,6 +155,7 @@ export default {
     getUserRepository,
     profileUpdateRepository,
     photoUploadRepository,
-    passwordRepository
+    passwordRepository,
+    userDashboardRepository
 };
 

@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const teamSchema = new mongoose.Schema(
   {
-    // Team name
     teamName: {
       type: String,
       required: true,
@@ -10,21 +9,17 @@ const teamSchema = new mongoose.Schema(
       unique: true,
     },
 
-    // Captain (User reference)
     captain: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
-    // Team members (User references)
     members: {
-      type: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      ],
+      type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      }],
       validate: {
         validator: function (value) {
           return value.length <= 6;
@@ -34,9 +29,7 @@ const teamSchema = new mongoose.Schema(
       required: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export default mongoose.model("Team", teamSchema);

@@ -23,7 +23,9 @@ router.post('/edit', authenticateRequest, userProfile);
 router.post('/profile', authenticateRequest,upload.single("profile"), uploadUserPost,photoUpload)
 
 
-router.get('/userdashboad',authenticateRequest,userDashboard)
+router.get('/userdashboard',authenticateRequest,userDashboard)
+
+
 
 
 

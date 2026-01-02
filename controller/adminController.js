@@ -1,5 +1,5 @@
 import {adminService }from "../service/adminService.js";
-import { adminDataRepoitory,tournamentAdminDataRepository,userAdminDataRepository } from "../repository/adminRepository.js";
+import { adminDataRepoitory,tournamentAdminDataRepository,userAdminDataRepository,teamAdminDataRepository,registerAdminDataRepository } from "../repository/adminRepository.js";
 
 export async function admincontroller(req, res) {
   try {
