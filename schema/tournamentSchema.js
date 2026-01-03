@@ -7,7 +7,8 @@ const tournament = new mongoose.Schema({
     time: { type: String, required: true },
     location: { type: String, required: true },
     type: { type: String, required: true },
-    qrCode: { type: String, default: null }
+    qrCode: { type: String, default: null },
+    prize:{type:String,required:true}
 });
 
 const tournamentSchema = mongoose.model("tournament", tournament);

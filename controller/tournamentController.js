@@ -3,6 +3,8 @@ import {createTournamentService,deleteTournamentService}from '../service/tournam
 export async function createTournamentController(req, res) {
   try {
 
+    console.log(req)
+
     // ✅ normalize body
     const body = { ...req.body };
 
@@ -11,16 +13,19 @@ export async function createTournamentController(req, res) {
       date,
       time,
       location,
-      type
+      type,
+      prize
     } = body;
 
     const qr = req.uploadedImage || null;
 
     const qrUrl = qr ? qr.url : null
 
+    console.log(body)
+
 
     // ✅ validation
-    if (!name || !date || !time || !location || !type) {
+    if (!name || !date || !time || !location || !type || !prize) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -30,7 +35,8 @@ export async function createTournamentController(req, res) {
       time,
       location,
       type,
-      qrUrl
+      qrUrl,
+      prize
     });
 
     return res.status(201).json({ tournament });

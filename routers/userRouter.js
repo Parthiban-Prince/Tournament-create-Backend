@@ -13,9 +13,7 @@ router.post('/login', getUser);
 
 router.post('/register', createUser);
 
-router.post('/password', (req, res) => {
-  res.send('Password reset endpoint');
-});
+
 
 
 router.post('/edit', authenticateRequest, userProfile);

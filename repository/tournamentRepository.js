@@ -10,6 +10,7 @@ export async function createTournamentRepository(data) {
       location: data.location,
       type: data.type,
       qrCode: data.qr, // Cloudinary object or URL
+      prize:data.prize
     });
 
     const result = await tournament.save();

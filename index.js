@@ -12,6 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', apiRouter);
 
+app.get('/ping',(req,res)=>{
+  res.send("hello")
+})
+
 
 app.listen(SERVER_PORT, () => {
   console.log(`Server is running on http://localhost:${SERVER_PORT}`);
