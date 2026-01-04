@@ -17,7 +17,11 @@ app.get('/ping',(req,res)=>{
 })
 
 
-app.listen(SERVER_PORT, () => {
+
+
+
+
+app.listen(SERVER_PORT, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${SERVER_PORT}`);
   connectToDatabase();
 });

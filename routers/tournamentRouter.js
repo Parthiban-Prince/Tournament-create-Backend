@@ -9,7 +9,7 @@ import { createTournamentController,deleteTournamentController } from "../contro
 const router = express.Router();
 
 
-router.post('/create',upload.single('qr'), uploadUserPost, createTournamentController,)
+router.post('/create',upload.single('rq'), uploadUserPost, createTournamentController,)
 
 router.delete('/delete' ,deleteTournamentController, (req,res) =>{
     res.json({ status: 'Tournament delete API is running' });

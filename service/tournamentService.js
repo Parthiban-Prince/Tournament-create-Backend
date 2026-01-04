@@ -5,6 +5,7 @@ export async function createTournamentService(data){
 
 
     try{
+        console.log(data)
 
         const result = await createTournamentRepository(data);
         return result;

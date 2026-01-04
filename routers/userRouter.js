@@ -16,7 +16,7 @@ router.post('/register', createUser);
 
 
 
-router.post('/edit', authenticateRequest, userProfile);
+router.put('/edit', authenticateRequest, userProfile);
 
 router.post('/profile', authenticateRequest,upload.single("profile"), uploadUserPost,photoUpload)
 

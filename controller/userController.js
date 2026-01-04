@@ -68,6 +68,8 @@ export async function getUser(req, res) {
 
 export async function passwordReset(req, res) {
   try {
+
+    console.log(req)
     const { email, newPassword, confirmPassword } = req.body;
 
     if (!email || !newPassword || !confirmPassword) {

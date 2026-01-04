@@ -3,7 +3,7 @@ import {createTournamentService,deleteTournamentService}from '../service/tournam
 export async function createTournamentController(req, res) {
   try {
 
-    console.log(req)
+    
 
     // ✅ normalize body
     const body = { ...req.body };
@@ -14,14 +14,16 @@ export async function createTournamentController(req, res) {
       time,
       location,
       type,
-      prize
+      prize,
+      EntryFees
     } = body;
 
     const qr = req.uploadedImage || null;
 
+    const entryFee = EntryFees || null
+
     const qrUrl = qr ? qr.url : null
 
-    console.log(body)
 
 
     // ✅ validation
@@ -36,7 +38,8 @@ export async function createTournamentController(req, res) {
       location,
       type,
       qrUrl,
-      prize
+      prize,
+      entryFee
     });
 
     return res.status(201).json({ tournament });
