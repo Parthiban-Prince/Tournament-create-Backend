@@ -8,7 +8,7 @@ const tournament = new mongoose.Schema({
     location: { type: String, required: true },
     type: { type: String, required: true },
     qrCode: { type: String,default:null },
-    prize:{type:String,required:true},
+    prize:{type:String, default:"none"},
     fee:{type:Number,default:0}
 
 });

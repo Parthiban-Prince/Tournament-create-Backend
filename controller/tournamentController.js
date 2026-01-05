@@ -27,7 +27,7 @@ export async function createTournamentController(req, res) {
 
 
     // ✅ validation
-    if (!name || !date || !time || !location || !type || !prize) {
+    if (!name || !date || !time || !location || !type ) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
