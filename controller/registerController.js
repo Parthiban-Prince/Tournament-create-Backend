@@ -3,11 +3,11 @@ import { tournamentRegisterService } from "../service/registerService.js";
 export async function tournamentRegisterController(req, res) {
   try {
 
-    console.log(req)
 
     const userId = req.user.userId;
     const { tournamentName, teamName } = req.body;
-    const paymentScreenshot = req.uploadedImage.url;
+    const paymentScreenshot = req.uploadedImage?.url  || "free";
+
 
     if (!tournamentName || !teamName) {
       return res.status(400).json({ message: "All fields are required" });

@@ -19,7 +19,6 @@ const tournamentRegisterSchema = new mongoose.Schema(
     },
     paymentScreenshot: {
       type: String,
-      required: true
     }
   },
   { timestamps: true }
