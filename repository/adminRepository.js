@@ -133,6 +133,8 @@ export async function createMatchRepository(data) {
     else if (data.winner.toLowerCase() === "draw") cleanData.winner = "Draw";
   }
 
+  console.log(cleanData)
+
   return await Match.create(cleanData);
 }
 

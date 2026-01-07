@@ -87,7 +87,9 @@ export async function registerAdminDatasController(req,res){
 // -----------------------
 export const createMatch = async (req, res) => {
   try {
+    console.log(req.body)
     const match = await createMatchRepository(req.body);
+    console.log(match)
 
     res.status(201).json({
       success: true,
