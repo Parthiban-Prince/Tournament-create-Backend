@@ -1,5 +1,6 @@
 import {adminService }from "../service/adminService.js";
-import { adminDataRepoitory,tournamentAdminDataRepository,userAdminDataRepository,teamAdminDataRepository,registerAdminDataRepository } from "../repository/adminRepository.js";
+import { adminDataRepoitory,tournamentAdminDataRepository,userAdminDataRepository,teamAdminDataRepository,registerAdminDataRepository,createMatchRepository,updateMatchRepository } from "../repository/adminRepository.js";
+import Match from "../schema/scoreSchema.js";
 
 export async function admincontroller(req, res) {
   try {
@@ -81,5 +82,71 @@ export async function registerAdminDatasController(req,res){
 
 }
 
+// -----------------------
+// Create a new match
+// -----------------------
+export const createMatch = async (req, res) => {
+  try {
+    const match = await createMatchRepository(req.body);
 
-export default {admincontroller,adminDataController,registerAdminDatasController,tournamentAdminDatasController,teamAdminDatasController,userAdminDatasController};
+    res.status(201).json({
+      success: true,
+      data: match,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// -----------------------
+// Update existing match
+// -----------------------
+
+
+export const updateMatch = async (req, res) => {
+  try {
+    const updatedMatch = await updateMatchRepository(req.params.id, req.body);
+
+    if (!updatedMatch) {
+      return res.status(404).json({ success: false, message: "Match not found" });
+    }
+
+    res.json({ success: true, data: updatedMatch });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+// -----------------------
+// Optional: Get all matches
+// -----------------------
+export const getAllMatches = async (req, res) => {
+  try {
+    const matches = await Match.find();
+    res.json({ success: true, data: matches });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// -----------------------
+// Optional: Get match by ID
+// -----------------------
+export const getMatchById = async (req, res) => {
+  try {
+    const match = await Match.findById(req.params.id);
+    if (!match)
+      return res.status(404).json({ success: false, message: "Match not found" });
+
+    res.json({ success: true, data: match });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+export default {admincontroller,adminDataController,registerAdminDatasController,tournamentAdminDatasController,teamAdminDatasController,userAdminDatasController,getMatchById,getAllMatches,updateMatch,createMatch};

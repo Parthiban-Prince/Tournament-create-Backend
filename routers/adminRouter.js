@@ -1,5 +1,5 @@
 import express from 'express';
-import { admincontroller, adminDataController,registerAdminDatasController,teamAdminDatasController,tournamentAdminDatasController,userAdminDatasController } from '../controller/adminController.js';
+import { admincontroller, adminDataController,registerAdminDatasController,teamAdminDatasController,tournamentAdminDatasController,userAdminDatasController,createMatch,updateMatch,getAllMatches,getMatchById } from '../controller/adminController.js';
 
 const router = express.Router();
 
@@ -18,4 +18,14 @@ router.get('/teamlist',teamAdminDatasController)
 router.get('/registerdteam',registerAdminDatasController)
 
 
+router.post("/match", createMatch);
+
+// Update match
+router.put("/match/:id", updateMatch);
+
+// Get all matches
+router.get("/matches", getAllMatches);
+
+// Get one match
+router.get("/match/:id", getMatchById);
 export default router;
