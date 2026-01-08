@@ -4,10 +4,12 @@ const admin = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    default:"adminlogin@gmail.com"
   },
   password: {
     type: String,
     required: true,
+    default:"admin"
   }
 });
 

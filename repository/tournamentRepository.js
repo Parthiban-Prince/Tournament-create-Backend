@@ -3,7 +3,9 @@ import tournamentSchema from "../schema/tournamentSchema.js";
 export async function createTournamentRepository(data) {
   try {
 
-    console.log(data.qr)
+    console.log(data)
+
+  
 
     const tournament = new tournamentSchema({
       name: data.name,
@@ -17,6 +19,7 @@ export async function createTournamentRepository(data) {
     });
 
     const result = await tournament.save();
+    console.log(result)
     return result;
 
   } catch (error) {

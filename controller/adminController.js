@@ -87,13 +87,24 @@ export async function registerAdminDatasController(req,res){
 // -----------------------
 export const createMatch = async (req, res) => {
   try {
-    console.log(req.body)
-    const match = await createMatchRepository(req.body);
+  
+
+        const predict =
+      Math.random() < 0.5 ? req.body.teamA : req.body.teamB;
+
+      console.log(predict)
+
+    // Create match
+    const match = await createMatchRepository({...req.body,predict});
+
+    // Randomly pick one of the two teams
     console.log(match)
 
     res.status(201).json({
       success: true,
-      data: match,
+      data: {
+        ...match,
+      },
     });
   } catch (error) {
     res.status(400).json({
@@ -102,6 +113,7 @@ export const createMatch = async (req, res) => {
     });
   }
 };
+
 
 // -----------------------
 // Update existing match

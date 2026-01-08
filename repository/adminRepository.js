@@ -11,6 +11,8 @@ export async function adminRepository(email,password){
 
         console.log("In admin repository", email, password);
 
+    
+
         const admin = await adminSchema.findOne({email:email,password:password});
         console.log("Admin found:", admin);
         return admin;
@@ -109,12 +111,16 @@ function parseScore(value) {
 }
 
 export async function createMatchRepository(data) {
+
+  console.log(data)
+
   const cleanData = {
     tournamentName: data.tournamentName,
     teamA: data.teamA,
     teamB: data.teamB,
     teamAScore: parseScore(data.teamAScore),
     teamBScore: parseScore(data.teamBScore),
+    predict: data.predict, // ✅ FIXED
   };
 
   if (data.status) {
@@ -124,7 +130,7 @@ export async function createMatchRepository(data) {
     };
     cleanData.status = statusMap[data.status.toLowerCase()] || "Upcoming";
   } else {
-    cleanData.status = "Upcoming"; // default
+    cleanData.status = "Upcoming";
   }
 
   if (data.winner) {
@@ -133,10 +139,10 @@ export async function createMatchRepository(data) {
     else if (data.winner.toLowerCase() === "draw") cleanData.winner = "Draw";
   }
 
-  console.log(cleanData)
-
+  console.log(cleanData);
   return await Match.create(cleanData);
 }
+
 
 
 export async function updateMatchRepository(id, data) {

@@ -31,6 +31,9 @@ const matchSchema = new mongoose.Schema(
       enum: ["Upcoming", "Completed"],
       default: "Upcoming",
     },
+    predict:{
+      type:String,
+    }
   },
   { timestamps: true }
 );
