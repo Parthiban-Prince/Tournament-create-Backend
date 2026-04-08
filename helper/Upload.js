@@ -1,4 +1,4 @@
-import cloudinary from "../config/Cloudinaryconfig.js";
+import cloudinary from "../config/cloudinaryConfig.js";
 
 export default async function uploadUserPost(req, res, next) {
   try {
