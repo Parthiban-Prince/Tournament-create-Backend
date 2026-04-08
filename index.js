@@ -5,7 +5,9 @@ import { connectToDatabase } from './config/DatabaseConfig.js';
 import {SERVER_PORT} from './config/ServerConfig.js';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*', // Replace '*' with your frontend URL (e.g., https://vercel.app) for security
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
