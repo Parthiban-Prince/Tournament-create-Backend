@@ -13,7 +13,6 @@ export async function connectToDatabase() {
     console.error("❌ Database connection failed:", error.message);
 
     // 🔥 IMPORTANT: stop server if DB fails
-    process.exit(1);
   }
 }
 
